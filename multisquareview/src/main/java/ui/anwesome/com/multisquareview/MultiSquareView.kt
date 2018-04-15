@@ -115,3 +115,14 @@ class MultiSquareView (ctx : Context) : View(ctx) {
         }
     }
 }
+
+fun ConcurrentLinkedQueue<MultiSquareView.SquarePart>.at(j : Int) : MultiSquareView.SquarePart? {
+    var i : Int = 0
+    forEach {
+        if (i == j) {
+            return it
+        }
+        i ++
+    }
+    return null
+}
