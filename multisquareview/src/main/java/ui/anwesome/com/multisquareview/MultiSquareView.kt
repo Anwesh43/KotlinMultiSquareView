@@ -38,8 +38,24 @@ class MultiSquareView (ctx : Context) : View(ctx) {
 
         fun startUpdating(startcb : () -> Unit) {
             if (dir == 0f) {
-                dir = 1  - 2 * prevScale 
+                dir = 1  - 2 * prevScale
+                startcb()
             }
+        }
+    }
+
+    data class ContainerState (var n : Int, var j : Int = 0, var dir : Int = 1) {
+
+        fun incrementCounter() {
+            j += dir
+            if (j == n || j == -1) {
+                dir *=-1
+                j += dir
+            }
+        }
+
+        fun execute(cb : (Int) -> Unit) {
+            cb(j)
         }
     }
 }
