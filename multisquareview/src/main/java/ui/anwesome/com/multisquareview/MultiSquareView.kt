@@ -58,4 +58,31 @@ class MultiSquareView (ctx : Context) : View(ctx) {
             cb(j)
         }
     }
+
+    data class SquarePart(var i : Int, val state : State = State()) {
+
+        fun draw(canvas : Canvas, paint : Paint, n : Int) {
+            val w : Float = canvas.width.toFloat()
+            val h : Float = canvas.height.toFloat()
+            val size : Float = (i+1) * (Math.min(w,h)/(2 * (n+1)))
+            canvas.save()
+            canvas.translate(w/2, h/2)
+            for (i in 0..3) {
+                canvas.save()
+                canvas.rotate(90f * i)
+                canvas.drawLine(size, (-size), size, -(size) + size * state.scale, paint)
+                canvas.restore()
+            }
+            canvas.restore()
+        }
+
+        fun update(stopcb : (Float) -> Unit) {
+            state.update(stopcb)
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            state.startUpdating(startcb)
+        }
+
+    }
 }
