@@ -7,6 +7,7 @@ package ui.anwesome.com.multisquareview
 import android.view.*
 import android.content.*
 import android.graphics.*
+import java.util.concurrent.ConcurrentLinkedQueue
 
 class MultiSquareView (ctx : Context) : View(ctx) {
 
@@ -84,5 +85,33 @@ class MultiSquareView (ctx : Context) : View(ctx) {
             state.startUpdating(startcb)
         }
 
+    }
+
+    data class SquarePartContainer(var n : Int, var state : ContainerState = ContainerState(n)) {
+
+        val squares : ConcurrentLinkedQueue<SquarePart> = ConcurrentLinkedQueue()
+
+        init {
+            for (i in 0..n-1) {
+                squares.add(SquarePart(i))
+            }
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            squares.forEach {
+                it.draw(canvas, paint, n)
+            }
+        }
+
+        fun update (stopcb : (Float) -> Unit) {
+            state.execute { j ->
+
+            }
+        }
+        fun startUpdating(startcb : () -> Unit) {
+            state.execute { j ->
+
+            }
+        }
     }
 }
