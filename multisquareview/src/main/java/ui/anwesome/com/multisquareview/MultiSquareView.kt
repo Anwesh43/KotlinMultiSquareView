@@ -66,6 +66,9 @@ class MultiSquareView (ctx : Context, var n : Int = 6) : View(ctx) {
             val w : Float = canvas.width.toFloat()
             val h : Float = canvas.height.toFloat()
             val size : Float = (i+1) * (Math.min(w,h)/(2 * (n+1)))
+            paint.color = Color.parseColor("#673AB7")
+            paint.strokeWidth = Math.min(w,h)/60
+            paint.strokeCap = Paint.Cap.ROUND
             canvas.save()
             canvas.translate(w/2, h/2)
             for (i in 0..3) {
