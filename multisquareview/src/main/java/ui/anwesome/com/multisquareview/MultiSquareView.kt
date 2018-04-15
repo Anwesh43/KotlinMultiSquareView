@@ -9,7 +9,7 @@ import android.content.*
 import android.graphics.*
 import java.util.concurrent.ConcurrentLinkedQueue
 
-class MultiSquareView (ctx : Context) : View(ctx) {
+class MultiSquareView (ctx : Context, var n : Int = 6) : View(ctx) {
 
     val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
@@ -141,6 +141,29 @@ class MultiSquareView (ctx : Context) : View(ctx) {
         fun stop () {
             if (animated) {
                 animated = false
+            }
+        }
+    }
+
+    data class Renderer(var view : MultiSquareView) {
+
+        val animator : Animator = Animator(view)
+
+        val multiSquare : SquarePartContainer = SquarePartContainer(view.n)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            multiSquare.draw(canvas, paint)
+            animator.animate {
+                multiSquare.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            multiSquare.startUpdating {
+                animator.start()
             }
         }
     }
