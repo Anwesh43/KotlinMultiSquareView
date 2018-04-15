@@ -111,6 +111,7 @@ class MultiSquareView (ctx : Context, var n : Int = 6) : View(ctx) {
         fun update (stopcb : (Float) -> Unit) {
             state.execute { j ->
                 squares.at(j)?.update {
+                    state.incrementCounter()
                     stopcb(it)
                 }
             }
