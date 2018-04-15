@@ -77,7 +77,7 @@ class MultiSquareView (ctx : Context, var n : Int = 6) : View(ctx) {
             for (i in 0..3) {
                 canvas.save()
                 canvas.rotate(90f * i)
-                canvas.drawLine(size, (-size), size, -(size) + size * state.scale, paint)
+                canvas.drawLine(size, (-size), size, -(size) + 2 * size * state.scale, paint)
                 canvas.restore()
             }
             canvas.restore()
@@ -106,6 +106,23 @@ class MultiSquareView (ctx : Context, var n : Int = 6) : View(ctx) {
         fun draw(canvas : Canvas, paint : Paint) {
             squares.forEach {
                 it.draw(canvas, paint, n)
+            }
+
+            if (n > 0) {
+                val w : Float = canvas.width.toFloat()
+                val h : Float = canvas.height.toFloat()
+                paint.color = Color.parseColor("#4CAF50")
+                paint.strokeWidth = Math.min(w,h)/60
+                paint.strokeCap = Paint.Cap.ROUND
+                state.execute { j ->
+                    val gap: Float = (0.9f * w) / n
+                    for (i in 0..1) {
+                        canvas.save()
+                        canvas.translate(w/20, h/20 +0.9f * h * i)
+                        canvas.drawLine(0f, 0f, gap * j + gap * (squares.at(j)?.state?.scale ?: 0f), 0f, paint)
+                        canvas.restore()
+                    }
+                }
             }
         }
 
