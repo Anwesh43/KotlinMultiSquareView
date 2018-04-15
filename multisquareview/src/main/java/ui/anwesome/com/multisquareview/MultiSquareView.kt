@@ -4,6 +4,7 @@ package ui.anwesome.com.multisquareview
  * Created by anweshmishra on 15/04/18.
  */
 
+import android.app.Activity
 import android.view.*
 import android.content.*
 import android.graphics.*
@@ -171,6 +172,13 @@ class MultiSquareView (ctx : Context, var n : Int = 6) : View(ctx) {
             multiSquare.startUpdating {
                 animator.start()
             }
+        }
+    }
+    companion object {
+        fun create (activity : Activity) : MultiSquareView {
+            val view : MultiSquareView = MultiSquareView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
