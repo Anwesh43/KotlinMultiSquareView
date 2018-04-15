@@ -105,12 +105,16 @@ class MultiSquareView (ctx : Context) : View(ctx) {
 
         fun update (stopcb : (Float) -> Unit) {
             state.execute { j ->
-
+                squares.at(j)?.update {
+                    stopcb(it)
+                }
             }
         }
         fun startUpdating(startcb : () -> Unit) {
             state.execute { j ->
-
+                squares.at(j)?.startUpdating {
+                    startcb()
+                }
             }
         }
     }
